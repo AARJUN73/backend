@@ -6,7 +6,11 @@ import bcrypt from "bcrypt"
 import  Jwt  from "jsonwebtoken";
 
 const app=express();
-app.use(cors());
+app.use(cors({
+     origin:"*" //global access  
+    origin:"http://localhost:3000" 
+ }
+));
 const auth=(req,res,next)=>{
     try{
         const token=req.header("backend-token") //keyname
@@ -86,11 +90,11 @@ app.post("/login",async function(req,res){
            res.status(200).send({token:token})
         }
         else{
-            res.status(400).send("Invali password")
+            res.status(400).send({message:"Invalid Email-id"})
         }
     }
    else{
-    res.status(400).send("Invalid Email")
+    res.status(400).send({message:"Invalid Email-id"})
    }
 
 });
